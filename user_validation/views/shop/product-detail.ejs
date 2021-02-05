@@ -1,0 +1,24 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="centered">
+        <%if(product){%>
+            <h1><%=product.title%></h1>
+            <hr>
+            <div>
+                <img src="<%=product.imageUrl%>" alt="<%=product.title%>" style="width: 20%;border-radius: 1rem;">
+            </div>
+            <h2>$<%=product.price%></h2>
+            <p><%=product.description%></p>
+
+            <%if(isAuthenticated){%>
+                <%-include('../includes/add-to-cart.ejs')%>
+            <%}%>
+        <%} else{%>
+        <h1>No Such Book! Plz be thoughtful & use ur time for something productive!</h1>
+        <%}%>
+    </main>
+    <%- include('../includes/end.ejs') %>

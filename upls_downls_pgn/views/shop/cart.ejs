@@ -1,0 +1,32 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <%if(products.length){%>
+        <h1>Total Price: $<%=(products.reduce((acc, prod) => acc + prod.price*prod.cartItem.qty, 0)).toFixed(2)%></h1>
+        <ul>
+            <%products.forEach(x=>{%>
+            <li>
+                <p><%=x.title%> (<%=x.cartItem.qty%>) : $<%=(x.cartItem.qty*x.price)%></p>
+                <form action="/cart-delete-item" method="POST">
+                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                    <input type="hidden" name="productId" value="<%=x.id%>">
+                    <button class="btn" type="submit">Delete</button>
+                </form>
+            </li>
+            <%})%>
+        </ul>
+        <hr>
+        <div class="centered" style="margin-top: 10px;">
+            <form action="/create-order" method="POST">
+                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                <button class="btn" type="submit">Order Now!</button>
+            </form>
+        </div>
+        <%}else{%>
+        <h1>No Products in Cart!</h1>
+        <%}%>
+    </main>
+    <%- include('../includes/end.ejs') %>
